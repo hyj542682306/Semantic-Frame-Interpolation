@@ -1,0 +1,13 @@
+python wan_fi_demo.py \
+    --lora ckpts/semfi.ckpt \
+    --prompt "The fox stands up and transforms into a beautiful woman." \
+    --negative_prompt "" \
+    --st_img examples/first.jpg \
+    --ed_img examples/last.jpg \
+    --height 816 \
+    --width 672 \
+    --frame 81 \
+    --output video.mp4 \
+    --num_inference_steps 50 \
+    --seed 0 \
+    --fps 30

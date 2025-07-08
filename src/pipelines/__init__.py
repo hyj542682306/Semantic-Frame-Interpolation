@@ -1,0 +1,1 @@
+from .wan_fi_custom import CustomWanFrameInterpolationPipeline
