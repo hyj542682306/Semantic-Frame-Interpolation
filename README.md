@@ -4,9 +4,9 @@
 
 Official implementation of SemFi in *Semantic Frame Interpolation*.
 
-Yijia Hong<sup>1,2</sup>, [Jiangning Zhang](https://zhangzjn.github.io/)<sup>3,4</sup>, [Ran Yi](https://yiranran.github.io/)<sup>1</sup>, Weijian Cao<sup>4</sup>, Xiaobin Hu<sup>4</sup>, Lizhuang Ma<sup>1</sup>, Shuicheng Yan<sup>4</sup><br>
+Yijia Hong<sup>1,2</sup>, [Jiangning Zhang](https://zhangzjn.github.io/)<sup>3</sup>, [Ran Yi](https://yiranran.github.io/)<sup>1</sup>, Weijian Cao<sup>5</sup>, Xiaobin Hu<sup>4</sup>, Lizhuang Ma<sup>1</sup>, Shuicheng Yan<sup>4</sup><br>
 
-<sup>1</sup>Shanghai Jiao Tong University, <sup>2</sup>Shanghai Innovation Institute, <sup>3</sup>Zhejiang University, <sup>4</sup>Tencent YouTu Lab
+<sup>1</sup>Shanghai Jiao Tong University, <sup>2</sup>Shanghai Innovation Institute, <sup>3</sup>Zhejiang University, <sup>4</sup>National University of Singapore, <sup>5</sup>Tencent YouTu Lab
 
 <img src="assets/semfi_overview.png" alt="example image">
 
