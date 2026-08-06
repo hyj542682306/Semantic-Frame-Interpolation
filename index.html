@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Semantic Frame Interpolation">
+  <meta name="keywords" content="Semantic Frame Interpolation, Video Generation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Semantic Frame Interpolation</title>
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.svg">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Semantic Frame Interpolation</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a>Yijia Hong</a><sup>1,2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://zhangzjn.github.io/">Jiangning Zhang</a><sup>3</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://yiranran.github.io/">Ran Yi</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a>Weijian Cao</a><sup>5</sup>,
+            </span>
+            <span class="author-block">
+              <a>Xiaobin Hu</a><sup>4</sup>,
+            </span>
+            <span class="author-block">
+              <a>Lizhuang Ma</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a>Shuicheng Yan</a><sup>4</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Shanghai Jiao Tong University,</span>
+            <span class="author-block"><sup>2</sup>Shanghai Innovation Institute,</span>
+            <span class="author-block"><sup>3</sup>Zhejiang University,</span><br />
+            <span class="author-block"><sup>4</sup>National University of Singapore,</span>
+            <span class="author-block"><sup>5</sup>Tencent YouTu Lab</span><br />
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2507.05173"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2507.05173"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/hyj542682306/Semantic-Frame-Interpolation"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+              <span class="link-block">
+                <a href="https://huggingface.co/datasets/oyiya/SFI-300K"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Highlights</h2>
+        <div class="content has-text-justified">
+          <li>We formally define <strong>Semantic Frame Interpolation (SFI)</strong> as a novel generative in-betweening paradigm that enables customized intermediate content generation under more challenging control conditions, significantly expanding the diversity of producible outputs.</li>
+          <li>We propose <strong>SemFi</strong>, a novel framework for SFI, introducing Mixture-of-LoRA for adaptive generation. It achieves better performance on arbitrary frame counts while maintaining precise control.</li>
+          <li>We introduce <strong>SFI-300K</strong>, the first large-scale dataset for SFI, featuring 300k diverse clips with rich annotations. The accompanying SFIBench provides standardized evaluation across fidelity, coherence, and instruction adherence at varying generation lengths.</li>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="teaser">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column has-text-centered">
+        <div class="content">
+          <div class="item">
+            <iframe width="1168" height="657" src="https://www.youtube.com/embed/TK5kVInAqM4" title="Semantic Frame Interpolation" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Generating intermediate video content of varying lengths based on given first and last frames, along with text prompt information, offers significant research and application potential. However, traditional frame interpolation tasks primarily focus on scenarios with a small number of frames, no text control, and minimal differences between the first and last frames.
+            Recent community developers have utilized large video models represented by Wan to endow frame-to-frame capabilities. However, these models can only generate a fixed number of frames and often fail to produce satisfactory results for certain frame lengths, while this setting lacks a clear official definition and a well-established benchmark.
+            In this paper, we first propose a new practical Semantic Frame Interpolation (SFI) task from the perspective of academic definition, which covers the above two settings and supports inference at multiple frame rates.
+            To achieve this goal, we propose a novel SemFi model building upon Wan2.1, which incorporates a Mixture-of-LoRA module to ensure the generation of high-consistency content that aligns with control conditions across various frame length limitations.
+            Furthermore, we propose SFI-300K, the first general-purpose dataset and benchmark specifically designed for SFI. To support this, we collect and process data from the perspective of SFI, carefully designing evaluation metrics and methods to assess the model’s performance across multiple dimensions, encompassing image and video, and various aspects, including consistency and diversity.
+            Through extensive experiments on SFI-300K, we demonstrate that our method is particularly well-suited to meet the requirements of the SFI task.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Overview of SemFi</h2>
+        <div class="content has-text-justified">
+          <p>
+            SemFi employs a Mixture-of-LoRA module to dynamically activate the most suitable LoRA parameters for the target frame count, enabling high-quality semantic frame interpolation across diverse frame generation requirements.
+        </div>
+      </div>
+    </div>
+    <img src="./static/images/semfi_overview.png">
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Intermediate Frame Generation Across Variable Frame Counts</h2>
+      </div>
+    </div>
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="box m-5">
+          <div class="item" style="display: flex; justify-content: center;">
+            <img src="./static/gifs/frame5.gif" alt="GIF 1" style="height: 400px;">
+          </div>
+          <div class="item" style="display: flex; justify-content: center;">
+            <img src="./static/gifs/frame9.gif" alt="GIF 2" style="height: 400px;">
+          </div>
+          <div class="item" style="display: flex; justify-content: center;">
+            <img src="./static/gifs/frame17.gif" alt="GIF 3" style="height: 400px;">
+          </div>
+          <div class="item" style="display: flex; justify-content: center;">
+            <img src="./static/gifs/frame33.gif" alt="GIF 4" style="height: 400px;">
+          </div>
+          <div class="item" style="display: flex; justify-content: center;">
+            <img src="./static/gifs/frame65.gif" alt="GIF 5" style="height: 400px;">
+          </div>
+          <div class="item" style="display: flex; justify-content: center;">
+            <img src="./static/gifs/frame81.gif" alt="GIF 6" style="height: 400px;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Semantic-Controlled Frame Interpolation</h2>
+      </div>
+    </div>
+    <div class="box m-5">
+      <div class="columns is-centered">
+        <div class="column">
+          <div class="item">
+            <img src="./static/gifs/sem1.gif" alt="GIF 1">
+          </div>
+          <div class="item">
+            <img src="./static/gifs/sem2.gif" alt="GIF 2">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div>
+  <div class="column has-text-centered" id="gallery">
+    <h2 class="title is-3">Application Gallery</h2>
+  </div>
+</div>
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="box m-5" style="width: 900px; height: 575px;">
+          <div class="item">
+            <img src="./static/gifs/app1.gif" style="height: 500px;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="box m-5" style="width: 900px; height: 575px;">
+          <div class="item">
+            <img src="./static/gifs/app2.gif" style="height: 500px;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="box m-5" style="width: 900px; height: 575px;">
+          <div class="item">
+            <img src="./static/gifs/app3.gif" style="height: 500px;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="box m-5" style="width: 900px; height: 575px;">
+          <div class="item">
+            <img src="./static/gifs/app4.gif" style="height: 500px;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="box m-5" style="width: 900px; height: 575px;">
+          <div class="item">
+            <img src="./static/gifs/app5.gif" style="height: 500px;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="Acknowledgments">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Acknowledgments</h2>
+    <p>Our project benefits from the amazing open-source projects:</p>
+    <ul>
+      <li><a href="https://github.com/modelscope/DiffSynth-Studio">DiffSynth-Studio</a></li>
+      <li><a href="https://github.com/Wan-Video/Wan2.1">Wan2.1</a></li>
+      <li><a href="https://github.com/hpcaitech/Open-Sora">Open-Sora</a></li>
+    </ul>
+    <p>We would like to thank the authors of these projects for their contributions to the community.</p>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{hong2026semantic,
+  title={Semantic frame interpolation},
+  author={Hong, Yijia and Zhang, Jiangning and Yi, Ran and Cao, Weijian and Hu, Xiaobin and Ma, Lizhuang and Yan, Shuicheng},
+  journal={IEEE Transactions on Image Processing},
+  year={2026},
+  publisher={IEEE}
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            We borrow the <a href="https://github.com/nerfies/nerfies.github.io">source code</a> for our website.
+            We sincerely appreciate Nerfies authors for their awesome templates.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
