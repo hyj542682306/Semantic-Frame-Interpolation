@@ -123,7 +123,7 @@ class LoRALayer(nn.Module):
 
 
 class SelfAttention(nn.Module):
-    def __init__(self, dim: int, num_heads: int, eps: float = 1e-6, MoL: bool = False):
+    def __init__(self, dim: int, num_heads: int, eps: float = 1e-6):
         super().__init__()
         self.dim = dim
         self.num_heads = num_heads
@@ -136,24 +136,15 @@ class SelfAttention(nn.Module):
         self.norm_q = RMSNorm(dim, eps=eps)
         self.norm_k = RMSNorm(dim, eps=eps)
 
-        self.MoL = MoL
         self.lora_q = nn.ModuleList([LoRALayer(dim, dim) for _ in range(7)])
         self.lora_k = nn.ModuleList([LoRALayer(dim, dim) for _ in range(7)])
         self.lora_v = nn.ModuleList([LoRALayer(dim, dim) for _ in range(7)])
         self.lora_o = nn.ModuleList([LoRALayer(dim, dim) for _ in range(7)])
 
     def forward(self, x, freqs, spec_idx=None):
-        q = self.q(x) + self.lora_q[0](x)
-        for idx in range(1, 7):
-            q = q + self.lora_q[idx](x) * (1.0 if idx == spec_idx else 0.0)
-        q = self.norm_q(q)
-        k = self.k(x) + self.lora_k[0](x)
-        for idx in range(1, 7):
-            k = k + self.lora_k[idx](x) * (1.0 if idx == spec_idx else 0.0)
-        k = self.norm_k(k)
-        v = self.v(x) + self.lora_v[0](x)
-        for idx in range(1, 7):
-            v = v + self.lora_v[idx](x) * (1.0 if idx == spec_idx else 0.0)
+        q = self.norm_q(self.q(x) + self.lora_q[0](x) + self.lora_q[spec_idx](x))
+        k = self.norm_k(self.k(x) + self.lora_k[0](x) + self.lora_k[spec_idx](x))
+        v = self.v(x) + self.lora_v[0](x) + self.lora_v[spec_idx](x)
 
         x = flash_attention(
             q=rope_apply(q, freqs, self.num_heads),
@@ -162,14 +153,12 @@ class SelfAttention(nn.Module):
             num_heads=self.num_heads
         )
 
-        o = self.o(x) + self.lora_o[0](x)
-        for idx in range(1, 7):
-            o = o + self.lora_o[idx](x) * (1.0 if idx == spec_idx else 0.0)
+        o = self.o(x) + self.lora_o[0](x) + self.lora_o[spec_idx](x)
         return o
 
 
 class CrossAttention(nn.Module):
-    def __init__(self, dim: int, num_heads: int, eps: float = 1e-6, has_image_input: bool = False, MoL: bool = False):
+    def __init__(self, dim: int, num_heads: int, eps: float = 1e-6, has_image_input: bool = False):
         super().__init__()
         self.dim = dim
         self.num_heads = num_heads
@@ -187,7 +176,6 @@ class CrossAttention(nn.Module):
             self.v_img = nn.Linear(dim, dim)
             self.norm_k_img = RMSNorm(dim, eps=eps)
 
-        self.MoL = MoL
         self.lora_q = nn.ModuleList([LoRALayer(dim, dim) for _ in range(7)])
         self.lora_k = nn.ModuleList([LoRALayer(dim, dim) for _ in range(7)])
         self.lora_v = nn.ModuleList([LoRALayer(dim, dim) for _ in range(7)])
@@ -200,17 +188,9 @@ class CrossAttention(nn.Module):
         else:
             ctx = y
 
-        q = self.q(x) + self.lora_q[0](x)
-        for idx in range(1, 7):
-            q = q + self.lora_q[idx](x) * (1.0 if idx == spec_idx else 0.0)
-        q = self.norm_q(q)
-        k = self.k(ctx) + self.lora_k[0](ctx)
-        for idx in range(1, 7):
-            k = k + self.lora_k[idx](ctx) * (1.0 if idx == spec_idx else 0.0)
-        k = self.norm_k(k)
-        v = self.v(ctx) + self.lora_v[0](ctx)
-        for idx in range(1, 7):
-            v = v + self.lora_v[idx](ctx) * (1.0 if idx == spec_idx else 0.0)
+        q = self.norm_q(self.q(x) + self.lora_q[0](x) + self.lora_q[spec_idx](x))
+        k = self.norm_k(self.k(ctx) + self.lora_k[0](ctx) + self.lora_k[spec_idx](ctx))
+        v = self.v(ctx) + self.lora_v[0](ctx) + self.lora_v[spec_idx](ctx)
 
         x = flash_attention(q, k, v, num_heads=self.num_heads)
         if self.has_image_input:
@@ -219,22 +199,20 @@ class CrossAttention(nn.Module):
             y = flash_attention(q, k_img, v_img, num_heads=self.num_heads)
             x = x + y
 
-        o = self.o(x) + self.lora_o[0](x)
-        for idx in range(1, 7):
-            o = o + self.lora_o[idx](x) * (1.0 if idx == spec_idx else 0.0)
+        o = self.o(x) + self.lora_o[0](x) + self.lora_o[spec_idx](x)
         return o
 
 
 class DiTBlock(nn.Module):
-    def __init__(self, has_image_input: bool, dim: int, num_heads: int, ffn_dim: int, eps: float = 1e-6, MoL: bool = False):
+    def __init__(self, has_image_input: bool, dim: int, num_heads: int, ffn_dim: int, eps: float = 1e-6):
         super().__init__()
         self.dim = dim
         self.num_heads = num_heads
         self.ffn_dim = ffn_dim
 
-        self.self_attn = SelfAttention(dim, num_heads, eps, MoL)
+        self.self_attn = SelfAttention(dim, num_heads, eps)
         self.cross_attn = CrossAttention(
-            dim, num_heads, eps, has_image_input=has_image_input, MoL=MoL)
+            dim, num_heads, eps, has_image_input=has_image_input)
         self.norm1 = nn.LayerNorm(dim, eps=eps, elementwise_affine=False)
         self.norm2 = nn.LayerNorm(dim, eps=eps, elementwise_affine=False)
         self.norm3 = nn.LayerNorm(dim, eps=eps)
@@ -242,7 +220,6 @@ class DiTBlock(nn.Module):
             approximate='tanh'), nn.Linear(ffn_dim, dim))
         self.modulation = nn.Parameter(torch.randn(1, 6, dim) / dim**0.5)
 
-        self.MoL = MoL
         self.lora_ffn_0 = nn.ModuleList([LoRALayer(dim, ffn_dim) for _ in range(7)])
         self.lora_ffn_2 = nn.ModuleList([LoRALayer(ffn_dim, dim) for _ in range(7)])
 
@@ -255,18 +232,10 @@ class DiTBlock(nn.Module):
         x = x + self.cross_attn(self.norm3(x), context, spec_idx)
         input_x = modulate(self.norm2(x), shift_mlp, scale_mlp)
 
-        if self.MoL:
-            ffn_0_output = self.ffn[0](input_x) + self.lora_ffn_0[0](input_x)
-            for idx in range(1, 7):
-                ffn_0_output = ffn_0_output + self.lora_ffn_0[idx](input_x) * (1.0 if idx == spec_idx else 0.0)
-            ffn_1_output = self.ffn[1](ffn_0_output)
-            ffn_2_output = self.ffn[2](ffn_1_output) + self.lora_ffn_2[0](ffn_1_output)
-            for idx in range(1, 7):
-                ffn_2_output = ffn_2_output + self.lora_ffn_2[idx](ffn_1_output) * (1.0 if idx == spec_idx else 0.0)
-
-            x = x + gate_mlp * ffn_2_output
-        else:
-            x = x + gate_mlp * self.ffn(input_x)
+        ffn_0_output = self.ffn[0](input_x) + self.lora_ffn_0[0](input_x) + self.lora_ffn_0[spec_idx](input_x)
+        ffn_1_output = self.ffn[1](ffn_0_output)
+        ffn_2_output = self.ffn[2](ffn_1_output) + self.lora_ffn_2[0](ffn_1_output) + self.lora_ffn_2[spec_idx](ffn_1_output)
+        x = x + gate_mlp * ffn_2_output
         return x
 
 
@@ -320,14 +289,12 @@ class WanModel(torch.nn.Module):
         num_layers: int,
         has_image_input: bool,
         has_image_pos_emb: bool = False,
-        MoL: bool = True
     ):
         super().__init__()
         self.dim = dim
         self.freq_dim = freq_dim
         self.has_image_input = has_image_input
         self.patch_size = patch_size
-        self.MoL = MoL
 
         self.patch_embedding = nn.Conv3d(
             in_dim, dim, kernel_size=patch_size, stride=patch_size)
@@ -344,7 +311,7 @@ class WanModel(torch.nn.Module):
         self.time_projection = nn.Sequential(
             nn.SiLU(), nn.Linear(dim, dim * 6))
         self.blocks = nn.ModuleList([
-            DiTBlock(has_image_input, dim, num_heads, ffn_dim, eps, MoL)
+            DiTBlock(has_image_input, dim, num_heads, ffn_dim, eps)
             for _ in range(num_layers)
         ])
         self.head = Head(dim, out_dim, patch_size, eps)

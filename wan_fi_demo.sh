@@ -1,5 +1,6 @@
 python wan_fi_demo.py \
-    --lora ckpts/semfi.ckpt \
+    --lora_path ckpts/SemFi-480P \
+    --model_path models/Wan2.1-I2V-14B-480P \
     --prompt "The fox stands up and transforms into a beautiful woman." \
     --negative_prompt "" \
     --st_img examples/first.jpg \
@@ -9,5 +10,5 @@ python wan_fi_demo.py \
     --frame 81 \
     --output video.mp4 \
     --num_inference_steps 50 \
-    --seed 0 \
+    --seed 42 \
     --fps 30
