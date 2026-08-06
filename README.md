@@ -1,6 +1,6 @@
 # Semantic Frame Interpolation
 
-### [Project Page](https://hyj542682306.github.io/sfi/) | [Paper](https://arxiv.org/pdf/2507.05173) | [Dataset](https://huggingface.co/datasets/oyiya/SFI-300K)
+### [Project Page](https://hyj542682306.github.io/Semantic-Frame-Interpolation) | [Paper](https://arxiv.org/pdf/2507.05173) | [Dataset](https://huggingface.co/datasets/oyiya/SFI-300K)
 
 Official implementation of SemFi in *Semantic Frame Interpolation*.
 
